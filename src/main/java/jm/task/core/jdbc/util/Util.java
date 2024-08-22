@@ -1,6 +1,10 @@
 package jm.task.core.jdbc.util;
 
 
+import jm.task.core.jdbc.model.User;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
@@ -11,7 +15,9 @@ import java.util.logging.Logger;
 
 public class Util {
     private static final Logger LOGGER = Logger.getLogger(Util.class.getName());
-    private Util() {}
+
+    private Util() {
+    }
 
     public static Connection getConnection() {
         Properties properties = new Properties();
@@ -26,5 +32,11 @@ public class Util {
             throw new RuntimeException(e);
         }
 
+    }
+
+    public static SessionFactory buildSessionFactory() {
+        return new Configuration()
+                .addAnnotatedClass(User.class)
+                .buildSessionFactory();
     }
 }

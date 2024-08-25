@@ -38,7 +38,7 @@ public class UserDaoJDBCImpl implements UserDao {
     public void createUsersTable() {
         try (PreparedStatement statement = CONNECTION.prepareStatement(CREATE_TABLE)) {
             statement.executeUpdate();
-            LOGGER.info("Table users created + ");
+            LOGGER.info("Table users created + "    + CREATE_TABLE);
         } catch (SQLException e) {
             LOGGER.info("Table users not created - " + e);
 
@@ -48,7 +48,7 @@ public class UserDaoJDBCImpl implements UserDao {
     public void dropUsersTable() {
         try (PreparedStatement statement = CONNECTION.prepareStatement(DROP_TABLE)) {
             statement.executeUpdate();
-            LOGGER.info("Table users deleted + ");
+            LOGGER.info("Table users deleted + " + DROP_TABLE);
         } catch (SQLException e) {
             LOGGER.info("Table users not deleted - " + e);
         }
@@ -60,7 +60,7 @@ public class UserDaoJDBCImpl implements UserDao {
             statement.setString(2, lastName);
             statement.setByte(3, age);
             statement.executeUpdate();
-            LOGGER.info("User saved +");
+            LOGGER.info("User saved " + name + " " + lastName + " " + age);
         } catch (SQLException e) {
             LOGGER.info("User not saved - " + e);
         }
@@ -70,7 +70,7 @@ public class UserDaoJDBCImpl implements UserDao {
         try (PreparedStatement statement = CONNECTION.prepareStatement(DELETE)) {
             statement.setLong(1, id);
             statement.executeUpdate();
-            LOGGER.info("User remove id + ");
+            LOGGER.info("User remove id + " + id);
         } catch (SQLException e) {
             LOGGER.info("User not remove id - " + e);
         }
@@ -88,7 +88,7 @@ public class UserDaoJDBCImpl implements UserDao {
                 user.setAge(resultSet.getByte("age"));
                 users.add(user);
             }
-            LOGGER.info("Get all users");
+            LOGGER.info("Get all users" + users);
             return users;
 
         } catch (SQLException e) {
@@ -100,7 +100,7 @@ public class UserDaoJDBCImpl implements UserDao {
     public void cleanUsersTable() {
         try (PreparedStatement statement = CONNECTION.prepareStatement(DELETE_FOR_CLEAN)) {
             statement.execute();
-            LOGGER.info("Table users deleted + ");
+            LOGGER.info("Table users deleted + "    + DELETE_FOR_CLEAN);
         } catch (SQLException e) {
             LOGGER.info("Table users not deleted - " + e);
         }

@@ -2,21 +2,17 @@ package jm.task.core.jdbc;
 
 import jm.task.core.jdbc.service.UserService;
 import jm.task.core.jdbc.service.UserServiceImpl;
-import jm.task.core.jdbc.util.Util;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-
-
-import static jm.task.core.jdbc.util.Util.getConnection;
 
 public class Main {
     public static void main(String[] args) {
-        UserService userService = new UserServiceImpl();
-        try (SessionFactory sessionFactory = Util.buildSessionFactory();
-             Session currentSession = sessionFactory.getCurrentSession()) {
-            currentSession.beginTransaction();
-            userService.removeUserById(1);
-            currentSession.getTransaction().commit();
-        }
+        UserService user = new UserServiceImpl();
+        user.createUsersTable();
+        user.saveUser("Ivan", "Ivanov", (byte) 25);
+        user.saveUser("Petr", "Petrov", (byte) 35);
+        user.saveUser("Alexey", "Alexeev", (byte) 45);
+        user.saveUser("Sergey", "Sergeev", (byte) 55);
+        user.getAllUsers();
+        user.cleanUsersTable();
+        user.dropUsersTable();
     }
 }

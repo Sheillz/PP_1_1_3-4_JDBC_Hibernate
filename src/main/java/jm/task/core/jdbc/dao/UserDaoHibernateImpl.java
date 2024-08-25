@@ -24,10 +24,10 @@ public class UserDaoHibernateImpl implements UserDao {
                     "name VARCHAR(45) NOT NULL," +
                     "lastName VARCHAR(45) NOT NULL," +
                     "age SMALLINT NOT NULL)").executeUpdate();
-            System.out.println("Таблица создана");
+            System.out.println("Таблица создана" + "users");
             currentSession.getTransaction().commit();
         } catch (HibernateException e) {
-            System.out.println("Таблица уже существует");
+            System.out.println("Таблица уже существует" + "users");
             throw e;
         }
     }
@@ -38,10 +38,10 @@ public class UserDaoHibernateImpl implements UserDao {
              Session currentSession = sessionFactory.getCurrentSession()) {
             currentSession.beginTransaction();
             currentSession.createNativeQuery("DROP TABLE IF EXISTS users").executeUpdate();
-            System.out.println("Таблица удалена");
+            System.out.println("Таблица удалена" +  " " + "users");
             currentSession.getTransaction().commit();
         } catch (HibernateException e) {
-            System.out.println("Таблица не существует");
+            System.out.println("Таблица не существует" + " " + "users"); ;
             throw e;
         }
     }
@@ -49,15 +49,16 @@ public class UserDaoHibernateImpl implements UserDao {
     @Override
     public void saveUser(String name, String lastName, byte age) {
         if (name == null || lastName == null || age <= 0) {
-            throw new IllegalArgumentException("Некорректные данные");
+            throw new IllegalArgumentException("Некорректные данные" + " " + name + " " + lastName + " " + age);
         }
         try (SessionFactory sessionFactory = Util.buildSessionFactory();
              Session currentSession = sessionFactory.getCurrentSession()) {
             currentSession.beginTransaction();
             currentSession.save(new User(name, lastName, age));
+            System.out.println("Пользователь добавлен" + " " + name + " " + lastName + " " + age);
             currentSession.getTransaction().commit();
         } catch (HibernateException e) {
-            System.out.println("Пользователь уже существует");
+            System.out.println("Пользователь уже существует" + " " + name + " " + lastName + " " + age);
             throw e;
         }
     }
@@ -70,7 +71,7 @@ public class UserDaoHibernateImpl implements UserDao {
             currentSession.beginTransaction();
             try {
                 if (id <= 0) {
-                    System.out.println("Id должен быть больше нуля");
+                    System.out.println("Id должен быть больше нуля" + id);
                 }
                 User user = currentSession.get(User.class, id);
                 Optional<User> mayBeUser = Optional.ofNullable(user);
@@ -96,6 +97,7 @@ public class UserDaoHibernateImpl implements UserDao {
              Session currentSession = sessionFactory.getCurrentSession()) {
             currentSession.beginTransaction();
             List<User> list = currentSession.createQuery("select u from User u", User.class).list();
+            System.out.println("Все пользователи: " + "  " + list);
             currentSession.getTransaction().commit();
             return list;
         }
@@ -107,6 +109,7 @@ public class UserDaoHibernateImpl implements UserDao {
              Session currentSession = sessionFactory.getCurrentSession()) {
             currentSession.beginTransaction();
             currentSession.createNativeQuery("TRUNCATE TABLE users").executeUpdate();
+            System.out.println("Таблица очищена" + "  " +  "users");
             currentSession.getTransaction().commit();
         }
     }

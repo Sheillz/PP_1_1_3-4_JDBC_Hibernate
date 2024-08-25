@@ -24,10 +24,10 @@ public class UserDaoHibernateImpl implements UserDao {
                     "name VARCHAR(45) NOT NULL," +
                     "lastName VARCHAR(45) NOT NULL," +
                     "age SMALLINT NOT NULL)").executeUpdate();
-            System.out.println("Таблица создана" + "users");
+            System.out.println("Таблица создана" + "  " + "users");
             currentSession.getTransaction().commit();
         } catch (HibernateException e) {
-            System.out.println("Таблица уже существует" + "users");
+            System.out.println("Таблица уже существует" + "  " +"users");
             throw e;
         }
     }

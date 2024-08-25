@@ -9,14 +9,18 @@ import org.hibernate.SessionFactory;
 
 import static jm.task.core.jdbc.util.Util.getConnection;
 
-public class Main {
+public class  Main {
     public static void main(String[] args) {
+
         UserService userService = new UserServiceImpl();
-        try (SessionFactory sessionFactory = Util.buildSessionFactory();
-             Session currentSession = sessionFactory.getCurrentSession()) {
-            currentSession.beginTransaction();
-            userService.removeUserById(1);
-            currentSession.getTransaction().commit();
+        userService.createUsersTable();
+        userService.saveUser("Ivan", "Ivanov", (byte) 25);
+        userService.saveUser("Petr", "Petrov", (byte) 35);
+        userService.saveUser("Sidor", "Sidorov", (byte) 45);
+        userService.saveUser("Vasiliy", "Vasilev", (byte) 55);
+        userService.getAllUsers();
+        userService.cleanUsersTable();
+        userService.dropUsersTable();
         }
     }
-}
+

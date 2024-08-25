@@ -12,7 +12,7 @@ public class UserServiceImpl implements UserService {
 
     public UserServiceImpl() {
 
-        userDao = new UserDaoHibernateImpl();
+        userDao = new UserDaoJDBCImpl();
     }
 
     public void createUsersTable() {
